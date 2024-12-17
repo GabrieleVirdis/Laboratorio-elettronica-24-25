@@ -3,7 +3,6 @@ import numpy as np
 from scipy import fft, constants
 import matplotlib.pyplot as plt
 import soundfile as sf
-
 # Leggi il file audio (diapason.wav)
 data, samplerate = sf.read('/home/gabriele/Downloads/diapason.wav')
 print('-------------------------------')
@@ -39,7 +38,7 @@ mask2 = ((freqs >= 108.00) & (freqs <= 114.00)) | ((freqs >= 875.00) & (freqs <=
 fft_filtered2[~mask2] = 0 # tutti i picchi principali (solo t. centrale)
 
 fft_filtered3 = fft_coeffs.copy() # tutti i picchi principali (+2 termini)
-mask3 = ((freqs >= 100.00) & (freqs <= 120.00)) | ((freqs >= 870.00) & (freqs <= 890.00)) | ((freqs >= 1975.00) & (freqs <= 1987.00))  # tutti i picchi principali (+ 2 termini)
+mask3 = ((freqs >= 95.00) & (freqs <= 120.00)) | ((freqs >= 870.00) & (freqs <= 890.00)) | ((freqs >= 1970.00) & (freqs <= 1990.00))  # tutti i picchi principali (+ 2 termini)
 fft_filtered3[~mask3] = 0 # tutti i picchi principali (+ 2 termini)            
 
 # Antitrasformata di fourier per segnale filtrato
@@ -156,15 +155,15 @@ axs[1].set_ylabel('Ampiezza')
 axs[1].legend()
 
 insets = [
-    [100, 120],  # Zoom su primo picco
+    [95, 125],  # Zoom su primo picco
     [870, 890],  # Zoom su secondo picco
-    [1975, 1987],  # Zoom su terzo picco
+    [1970, 1990],  # Zoom su terzo picco
     ]
 
 lim_y = [
-    [0, 2 * 10 ** 8],
-    [0, 1.3 * 10**8],
-    [0, 0.8 * 10**8],
+    [0, 20000],
+    [0, 15000],
+    [0, 2500],
     ]
 for i, (start_freq, end_freq) in enumerate(insets):
     # Posizionamento degli insetti in alto a destra con maggiore distanza
