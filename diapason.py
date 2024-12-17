@@ -21,9 +21,9 @@ if len(new_data.shape) > 1:
     new_data = new_data[:, 0] 
 
 # Trasformata di Fourier
-fft_coeffs = fft.rfft(new_data)
+fft_coeffs = fft.fft(new_data)
 diff_temp = 1.0 / new_samplerate
-freqs =  fft.rfftfreq(len(new_data), diff_temp)
+freqs =  fft.fftfreq(len(new_data), diff_temp)
 
 #Filtraggi: Maschere 
 fft_filtered = fft_coeffs.copy() #picco centrale
@@ -49,31 +49,31 @@ anti_fft1 = fft.ifft(fft_filtered1)
 anti_fft2 = fft.ifft(fft_filtered2)
 anti_fft3 = fft.ifft(fft_filtered3)
 
-
 # Plot dati
-fig, axs = plt.subplots(2, 2, figsize=(10, 6), layout='constrained')
+fig, axs = plt.subplots(1, 3, figsize=(10, 6), layout='constrained')
 
 # Segnale originale
-axs[0, 0].plot(new_data, color='green')
-axs[0, 0].set_xlabel('Tempo [s]')
-axs[0, 0].set_ylabel('Ampiezza')
-axs[0, 0].set_title('Segnale originale (diapason)')
-axs[0, 0].legend(['Segnale originale'], fontsize=10)
+axs[0].plot(new_data, color='green')
+axs[0].set_xlabel('Tempo [s]')
+axs[0].set_ylabel('Ampiezza')
+axs[0].set_title('Segnale originale (diapason)')
+axs[0].legend(['Segnale originale'], fontsize=10)
 
 # Coefficienti di Fourier (parte reale)
-axs[0, 1].plot(freqs[:len(fft_coeffs)], fft_coeffs[:len(fft_coeffs)].real, color='yellow')
-axs[0, 1].set_title('Parte reale dei coefficienti di Fourier')
-axs[0, 1].set_xlabel('Frequenza [Hz]')
-axs[0, 1].set_ylabel(r'Re$(X_k)$')
-axs[0, 1].legend(['Parte reale FFT'], fontsize=10)
+axs[1].plot(freqs[:len(new_data)//2], np.abs(fft_coeffs[:len(new_data)//2]).real, color='yellow')
+axs[1].set_title('Parte reale dei coefficienti di Fourier')
+axs[1].set_xlabel('Frequenza [Hz]')
+axs[1].set_ylabel(r'Re$(X_k)$')
+axs[1].legend(['Parte reale FFT'], fontsize=10)
 
 # Coefficienti di Fourier (parte immaginaria)
-axs[1, 0].plot(freqs[:len(freqs)//2], np.imag(fft_coeffs[:len(fft_coeffs)//2]), color='orange')
-axs[1, 0].set_title('Parte immaginaria dei coefficienti di Fourier')
-axs[1, 0].set_xlabel('Frequenza [Hz]')
-axs[1, 0].set_ylabel(r'Im$(X_k)$')
-axs[1, 0].legend(['Parte immaginaria FFT'], fontsize=10)
+axs[2].plot(freqs[:len(new_data)//2], (fft_coeffs[:len(fft_coeffs)//2]).imag, color='orange')
+axs[2].set_title('Parte immaginaria dei coefficienti di Fourier')
+axs[2].set_xlabel('Frequenza [Hz]')
+axs[2].set_ylabel(r'Im$(X_k)$')
+axs[2].legend(['Parte immaginaria FFT'], fontsize=10)
 
+plt.show()
 
 # Potenza spettrale e confronto segnali filtrati e originale
 fig, axs = plt.subplots(1, 2, figsize=(10, 6), layout='constrained')
@@ -83,7 +83,7 @@ axs[0].set_title('Potenza spettrale originale (diapason)')
 axs[0].set_xlabel('Frequenza [Hz]')
 axs[0].set_ylabel(r'$|X_k|^2$')
 
-#axs[1].plot(anti_fft_o, color='green', label='Segnale originale') #ricostruzione segnale originale
+axs[1].plot(anti_fft_o, color='green', label='Segnale originale') #ricostruzione segnale originale
 axs[1].set_title('Diapason originale ricostruita')
 axs[1].set_xlabel('Tempo')
 axs[1].set_ylabel('Ampiezza')
