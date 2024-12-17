@@ -46,12 +46,12 @@ mask = (freqs >= 200) & (freqs <= 240) #df1
 fft_filtered[~mask] = 0 #df1
 
 fft_filtered2 = fft_coeffs2.copy() #df2
-mask2 = (freqs >= 20) & (freqs <= 40) #df2
-fft_filtered2[~mask2] = 0 #df2
+mask2 = (freqs >= 495) & (freqs <= 505) #df2
+fft_filtered2[mask2] = 0 #df2
 
 fft_filtered3 = fft_coeffs3.copy() #df3
-mask3 = (freqs >= 990) & (freqs <= 1010) #df3
-fft_filtered3[~mask3] = 0 #df3
+mask3 = (freqs >= 0) & (freqs <= 500) #df3
+fft_filtered3[mask3] = 0 #df3
 
 # Antitrasformata di fourier 
 signal_reconstructed = fft.ifft(fft_coeffs, n=len(signal)) #antit. su coefficenti originali df1
