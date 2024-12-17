@@ -25,33 +25,29 @@ fft_coeffs = fft.fft(new_data)
 diff_temp = 1 / new_samplerate
 freqs =  fft.fftfreq(len(new_data), diff_temp)
 
-'''
+
 # Filtraggi: Maschere 
 fft_filtered = fft_coeffs.copy() #picco centrale
-mask = np.absolute(fft_coeffs)**2 < (1.2) * 10 ** 8 #picco centrale
+mask = ( (freqs >= 498 ) & ( freqs <= 502) ) #picco centrale
 fft_filtered[mask] = 0 #picco centrale
 
 fft_filtered1 = fft_coeffs.copy() # due picchi principali (solo t. centrale)
-mask1 = ((freqs >= 329.25) & (freqs <= 329.60)) | ((freqs >= 551.80) & (freqs <= 552.00)) # due picchi principali (solo t. centrale)
+mask1 = ((freqs >= 498) & (freqs <= 502)) | ((freqs >= 667) & (freqs <= 672)) # due picchi principali (solo t. centrale)
 fft_filtered1[~mask1] = 0 # due picchi principali (solo t. centrale)
 
 fft_filtered2 = fft_coeffs.copy() # tutti i picchi principali (solo t. centrale)
-mask2 = ((freqs >= 329.25) & (freqs <= 329.60)) | ((freqs >= 551.80) & (freqs <= 552.00)) | ((freqs >= 662.00) & (freqs <= 662.30)) | ((freqs >= 1543.20) & (freqs <= 1543.60)) | ((freqs >= 2320.00) & (freqs <= 2320.60)) # tutti i picchi principali (solo t. centrale)
+mask2 = ((freqs >= 498) & (freqs <= 502)) | ((freqs >= 667) & (freqs <= 672)) | ((freqs >= 780) & (freqs <= 784)) | ((freqs >= 1337) & (freqs <= 1339)) # tutti i picchi principali (solo t.c)
 fft_filtered2[~mask2] = 0 # tutti i picchi principali (solo t. centrale)
 
 fft_filtered3 = fft_coeffs.copy() # tutti i picchi principali (+2 termini)
-mask3 = ((freqs >= 327) & (freqs <= 332)) | ((freqs >= 549.80) & (freqs <= 554.00)) | ((freqs >= 660.00) & (freqs <= 664)) | ((freqs >= 1542.00) & (freqs <= 1545.00)) | ((freqs >= 2318.00) & (freqs <= 2322.00))  # tutti i picchi principali (+ 2 termini)
+mask3 = ((freqs >= 492.5) & (freqs <= 505)) | ((freqs >= 662.5) & (freqs <= 675)) | ((freqs >= 775) & (freqs <= 785)) | ((freqs >= 1334) & (freqs <= 1350))  # tutti i picchi principali (+ 2 termini)
 fft_filtered3[~mask3] = 0 # tutti i picchi principali (+ 2 termini)                        
-
-
 # Antitrasformata di fourier per segnale filtrato
 anti_fft_o = fft.ifft(fft_coeffs)
 anti_fft = fft.ifft(fft_filtered)
 anti_fft1 = fft.ifft(fft_filtered1)
 anti_fft2 = fft.ifft(fft_filtered2)
 anti_fft3 = fft.ifft(fft_filtered3)
-
-'''
 
 # Plot dati
 fig, axs = plt.subplots(2, 2, figsize=(10, 6), layout='constrained')
@@ -64,7 +60,7 @@ axs[0, 0].set_title('Segnale originale (diapason)')
 axs[0, 0].legend(['Segnale originale'], fontsize=10)
 
 # Coefficienti di Fourier (parte reale)
-axs[0, 1].plot(freqs[:len(freqs)//2], np.real(fft_coeffs[:len(fft_coeffs)//2]), color='yellow')
+axs[0, 1].plot(freqs[:len(freqs)//2], (np.abs(fft_coeffs[:len(fft_coeffs)//2])).real, color='yellow')
 axs[0, 1].set_title('Parte reale dei coefficienti di Fourier')
 axs[0, 1].set_xlabel('Frequenza [Hz]')
 axs[0, 1].set_ylabel(r'Re$(X_k)$')
@@ -86,14 +82,13 @@ axs[0].set_title('Potenza spettrale originale (diapason)')
 axs[0].set_xlabel('Frequenza [Hz]')
 axs[0].set_ylabel(r'$|X_k|^2$')
 
-#axs[1].plot(anti_fft_o, color='green', label='Segnale originale') #ricostruzione segnale originale
+axs[1].plot(anti_fft_o, color='green', label='Segnale originale') #ricostruzione segnale originale
 axs[1].set_title('Diapason originale ricostruita')
 axs[1].set_xlabel('Tempo')
 axs[1].set_ylabel('Ampiezza')
 axs[1].legend()
 plt.show()
 
-'''
 #---#
 fig, axs = plt.subplots(1, 2, figsize=(10, 6), layout='constrained')
 
@@ -188,4 +183,3 @@ sf.write('/home/gabriele/Laboratorio3/garage_band/Suoni creati/new_pulita_media(
 sf.write('/home/gabriele/Laboratorio3/garage_band/Suoni creati/new_pulita_media(filt1).wav', np.real(anti_fft1), samplerate, subtype='FLOAT')
 sf.write('/home/gabriele/Laboratorio3/garage_band/Suoni creati/new_pulita_media(filt2).wav', np.real(anti_fft2), samplerate, subtype='FLOAT')
 sf.write('/home/gabriele/Laboratorio3/garage_band/Suoni creati/new_pulita_media(filt3).wav', np.real(anti_fft3), samplerate, subtype='FLOAT')
-'''
