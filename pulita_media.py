@@ -29,18 +29,18 @@ freqs =  fft.fftfreq(len(new_data), diff_temp)
 # Filtraggi: Maschere 
 fft_filtered = fft_coeffs.copy() #picco centrale
 mask = ( (freqs >= 498 ) & ( freqs <= 502) ) #picco centrale
-fft_filtered[mask] = 0 #picco centrale
+fft_filtered[~mask] = 0 #picco centrale
 
 fft_filtered1 = fft_coeffs.copy() # due picchi principali (solo t. centrale)
 mask1 = ((freqs >= 498) & (freqs <= 502)) | ((freqs >= 667) & (freqs <= 672)) # due picchi principali (solo t. centrale)
 fft_filtered1[~mask1] = 0 # due picchi principali (solo t. centrale)
 
 fft_filtered2 = fft_coeffs.copy() # tutti i picchi principali (solo t. centrale)
-mask2 = ((freqs >= 498) & (freqs <= 502)) | ((freqs >= 667) & (freqs <= 672)) | ((freqs >= 780) & (freqs <= 784)) | ((freqs >= 1337) & (freqs <= 1339)) # tutti i picchi principali (solo t.c)
+mask2 = ((freqs >= 498) & (freqs <= 502)) | ((freqs >= 667) & (freqs <= 672)) | ((freqs >= 221) & (freqs <= 224)) | ((freqs >= 332) & (freqs <= 336)) # tutti i picchi principali (solo t.c)
 fft_filtered2[~mask2] = 0 # tutti i picchi principali (solo t. centrale)
 
 fft_filtered3 = fft_coeffs.copy() # tutti i picchi principali (+2 termini)
-mask3 = ((freqs >= 492.5) & (freqs <= 505)) | ((freqs >= 662.5) & (freqs <= 675)) | ((freqs >= 775) & (freqs <= 785)) | ((freqs >= 1334) & (freqs <= 1350))  # tutti i picchi principali (+ 2 termini)
+mask3 = ((freqs >= 492.5) & (freqs <= 505)) | ((freqs >= 662.5) & (freqs <= 675)) | ((freqs >= 210) & (freqs <= 230)) | ((freqs >= 325) & (freqs <= 345))  # tutti i picchi principali (+ 2 termini)
 fft_filtered3[~mask3] = 0 # tutti i picchi principali (+ 2 termini)                        
 # Antitrasformata di fourier per segnale filtrato
 anti_fft_o = fft.ifft(fft_coeffs)
@@ -50,40 +50,40 @@ anti_fft2 = fft.ifft(fft_filtered2)
 anti_fft3 = fft.ifft(fft_filtered3)
 
 # Plot dati
-fig, axs = plt.subplots(2, 2, figsize=(10, 6), layout='constrained')
+fig, axs = plt.subplots(1, 3, figsize=(10, 6), layout='constrained')
 
 # Segnale originale
-axs[0, 0].plot(new_data, color='green')
-axs[0, 0].set_xlabel('Tempo [s]')
-axs[0, 0].set_ylabel('Ampiezza')
-axs[0, 0].set_title('Segnale originale (diapason)')
-axs[0, 0].legend(['Segnale originale'], fontsize=10)
+axs[0].plot(new_data, color='green')
+axs[0].set_xlabel('Tempo [s]')
+axs[0].set_ylabel('Ampiezza')
+axs[0].set_title('Segnale originale [pulita media]')
+axs[0].legend(['Segnale originale'], fontsize=10)
 
 # Coefficienti di Fourier (parte reale)
-axs[0, 1].plot(freqs[:len(freqs)//2], (np.abs(fft_coeffs[:len(fft_coeffs)//2])).real, color='yellow')
-axs[0, 1].set_title('Parte reale dei coefficienti di Fourier')
-axs[0, 1].set_xlabel('Frequenza [Hz]')
-axs[0, 1].set_ylabel(r'Re$(X_k)$')
-axs[0, 1].legend(['Parte reale FFT'], fontsize=10)
+axs[1].plot(freqs[:len(freqs)//2], (np.abs(fft_coeffs[:len(fft_coeffs)//2])).real, color='yellow')
+axs[1].set_title('Parte reale dei coefficienti di Fourier')
+axs[1].set_xlabel('Frequenza [Hz]')
+axs[1].set_ylabel(r'$|X_k|$')
+axs[1].legend(['X_k [parte reale]'], fontsize=10)
 
 # Coefficienti di Fourier (parte immaginaria)
-axs[1, 0].plot(freqs[:len(freqs)//2], np.imag(fft_coeffs[:len(fft_coeffs)//2]), color='orange')
-axs[1, 0].set_title('Parte immaginaria dei coefficienti di Fourier')
-axs[1, 0].set_xlabel('Frequenza [Hz]')
-axs[1, 0].set_ylabel(r'Im$(X_k)$')
-axs[1, 0].legend(['Parte immaginaria FFT'], fontsize=10)
+axs[2].plot(freqs[:len(freqs)//2], np.imag(fft_coeffs[:len(fft_coeffs)//2]), color='orange')
+axs[2].set_title('Parte immaginaria dei coefficienti di Fourier')
+axs[2].set_xlabel('Frequenza [Hz]')
+axs[2].set_ylabel(r'$X_k$')
+axs[2].legend(['X_k [parte immaginaria]'], fontsize=10)
 
 
 # Potenza spettrale e confronto segnali filtrati e originale
 fig, axs = plt.subplots(1, 2, figsize=(10, 6), layout='constrained')
 
 axs[0].plot(freqs[:len(freqs)//2], np.abs(fft_coeffs[:len(fft_coeffs)//2])**2, color='green') #originale
-axs[0].set_title('Potenza spettrale originale (diapason)')
+axs[0].set_title('Potenza spettrale originale [pulita media]')
 axs[0].set_xlabel('Frequenza [Hz]')
 axs[0].set_ylabel(r'$|X_k|^2$')
 
 axs[1].plot(anti_fft_o, color='green', label='Segnale originale') #ricostruzione segnale originale
-axs[1].set_title('Diapason originale ricostruita')
+axs[1].set_title('Sintesi [Pulita media]')
 axs[1].set_xlabel('Tempo')
 axs[1].set_ylabel('Ampiezza')
 axs[1].legend()
@@ -93,14 +93,14 @@ plt.show()
 fig, axs = plt.subplots(1, 2, figsize=(10, 6), layout='constrained')
 
 axs[0].plot(freqs[:len(freqs)//2], np.abs(fft_filtered[:len(fft_filtered)//2])**2, color='green') #filtro tranne del picco principale
-axs[0].set_title('Potenza spettrale (diapason), picco principale (termine centrale) ')
+axs[0].set_title('Potenza spettrale [pulita media], picco principale (termine centrale) ')
 axs[0].set_xlabel('Frequenza [Hz]')
 axs[0].set_ylabel(r'$|X_k|^2$')
 axs[0].legend(['Potenza spettrale'], fontsize=10)
 
 axs[1].plot(new_data, alpha=0.7, color='green', label='Segnale originale') #filtro tranne del picco principale
 axs[1].plot(anti_fft, color='purple', label='Segnale filtrato $P < 3.5$')
-axs[1].set_title('Segnale ricostruito (filtrato)')
+axs[1].set_title('Sintesi segnale filtrato [pulita media]')
 axs[1].set_xlabel('Tempo')
 axs[1].set_ylabel('Ampiezza')
 axs[1].legend()
@@ -109,14 +109,14 @@ plt.show()
 fig, axs = plt.subplots(1, 2, figsize=(10, 6), layout='constrained')
 
 axs[0].plot(freqs[:len(freqs)//2], np.abs(fft_filtered1[:len(fft_filtered1)//2])**2, color='green') #filtro tranne dei primi due picchi principali (solo il termine centrale)
-axs[0].set_title('Potenza spettrale (diapason), 2 picchi principali (termine centrale)')
+axs[0].set_title('Potenza spettrale [pulita media], 2 picchi principali (termine centrale)')
 axs[0].set_xlabel('Frequenza [Hz]')
 axs[0].set_ylabel(r'$|X_k|^2$')
 axs[0].legend(['Potenza spettrale'], fontsize=10)
 
 axs[1].plot(new_data, alpha=0.7, color='green', label='Segnale originale') #filtro tranne picchi principali (solo il termine centrale)
 axs[1].plot(anti_fft1, color='purple', label='Segnale filtrato')
-axs[1].set_title('Diapason ricostruita filtrata')
+axs[1].set_title('Sintesi segnale filtrato [pulita media]')
 axs[1].set_xlabel('Tempo')
 axs[1].set_ylabel('Ampiezza')
 axs[1].legend()
@@ -125,14 +125,14 @@ plt.show()
 fig, axs = plt.subplots(1, 2, figsize=(10, 6), layout='constrained')
 
 axs[0].plot(freqs[:len(freqs)//2], np.abs(fft_filtered2[:len(fft_filtered2)//2])**2, color='green') #filtro tranne picchi principali (solo il termine centrale)
-axs[0].set_title('Potenza spettrale (diapason), picchi principali (termine centrale)')
+axs[0].set_title('Potenza spettrale [pulita media], picchi principali (termine centrale)')
 axs[0].set_xlabel('Frequenza [Hz]')
 axs[0].set_ylabel(r'$|X_k|^2$')
 axs[0].legend(['Potenza spettrale'], fontsize=10)
 
 axs[1].plot( new_data, alpha=0.7, color='green', label='Segnale originale') #filtro tranne picchi principali (solo il termine centrale)
 axs[1].plot( anti_fft2, color='purple', label='Segnale filtrato')
-axs[1].set_title('Diapason  ricostruita (filtrata)')
+axs[1].set_title('Sintesi segnale filtrato [pulita media]')
 axs[1].set_xlabel('Tempo')
 axs[1].set_ylabel('Ampiezza')
 axs[1].legend()
@@ -142,32 +142,30 @@ plt.show()
 fig, axs = plt.subplots(1, 2, figsize=(10, 6), layout='constrained')
 
 axs[0].plot(freqs[:len(freqs)//2], np.abs(fft_filtered3[:len(fft_filtered3)//2])**2, color='green') #filtro dei picchi principali + 2 termini per lato oltre quello centrale 
-axs[0].set_title('Potenza spettrale (distorta), picchi principali (termine centrale + 2)')
+axs[0].set_title('Potenza spettrale [pulita media], picchi principali (termine centrale + termini secondari)')
 axs[0].set_xlabel('Frequenza [Hz]')
 axs[0].set_ylabel(r'$|X_k|^2$')
 axs[0].legend(['Potenza spettrale'], fontsize=10)
 
 axs[1].plot(new_data, alpha=0.7, color='green', label='Segnale originale') #filtro dei picchi principali + 2 termini per lato oltre quello centrale
 axs[1].plot(anti_fft3, color='purple', label='Segnale filtrato')
-axs[1].set_title('Diapason ricostruita (filtrata)')
+axs[1].set_title('Sintesi segnale filtrato [pulita media]')
 axs[1].set_xlabel('Tempo')
 axs[1].set_ylabel('Ampiezza')
 axs[1].legend()
 
 insets = [
-    [327, 332],  # Zoom su primo picco
-    [549.80, 554.00],  # Zoom su secondo picco
-    [660.00, 664.00],  # Zoom su terzo picco
-    [1542.00, 1545.00],  # Zoom su quarto picco
-    [2318.00, 2322.00],  # Zoom su quinto picco
+    [210,230],  # Zoom su primo picco
+    [325, 345],  # Zoom su secondo picco
+    [490, 505],  # Zoom su terzo picco
+    [662.2, 680],  # Zoom su quarto picco  # Zoom su quinto picco
 ]
 
 lim_y = [
-    [0, 2 * 10**8],
-    [0, 1.3 * 10**8],
-    [0, 0.8 * 10**8],
-    [0, 0.3 * 10**8],
-    [0, 0.1 * 10**8],
+    [0, 1.2 * 10**6],
+    [0, 80000],
+    [0, 70000],
+    [0, 40000],
 ]
 for i, (start_freq, end_freq) in enumerate(insets):
     # Posizionamento degli insetti in alto a destra con maggiore distanza
