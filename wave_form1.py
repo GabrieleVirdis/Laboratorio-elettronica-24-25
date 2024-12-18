@@ -69,112 +69,136 @@ fig, axs = plt.subplots(3, 3, figsize=(12, 8), constrained_layout=True)
 # Plot del segnale filtrato e ricostruito
 axs[0, 0].plot(df1.iloc[:, 0], signal_reconstructed, alpha=0.7, color='green', label='Segnale originale')
 axs[0, 0].plot(df1.iloc[:, 0], signal_filtered, color='purple', label='Segnale filtrato')
-axs[0, 0].set_title('Segnale ricostruito (filtrato) e non (df1)')
+axs[0, 0].set_title('Sintesi del segnale [data1]')
 axs[0, 0].set_xlabel('Tempo')
 axs[0, 0].set_ylabel('Ampiezza')
 axs[0, 0].legend()
 axs[0, 0].set_xlim(0.57 , 0.59)
 
 # Plot della FFT (reale)
-axs[1, 0].plot(freqs[:int(freqs.size/2)], np.real(np.abs(fft_coeffs[:int(fft_coeffs.size/2)])), color='black', label=r'$X_k$ reale')
-axs[1, 0].set_title('Coefficenti di Fourier reali (df1)')
+axs[1, 0].plot(freqs[:int(freqs.size/2)], np.real(np.abs(fft_coeffs[:int(fft_coeffs.size/2)])), color='black', label=r'$|X_k| [parte reale]$')
+axs[1, 0].set_title('Coefficenti di Fourier reali [data1]')
 axs[1, 0].set_xlabel('Frequenza [Hz]')
-axs[1, 0].set_ylabel(r'$X_k reale$')
+axs[1, 0].set_ylabel(r'$|X_k|$')
 axs[1, 0].legend()
 
 # Plot della FFT (immaginaria)
-axs[2, 0].plot(freqs[:int(freqs.size/2)], np.imag(fft_coeffs[:int(fft_coeffs.size/2)]), color='orange', label=r'$X_k$ immaginaria')
-axs[2, 0].set_title('Coefficenti di Fourier immaginari (df1)')
+axs[2, 0].plot(freqs[:int(freqs.size/2)], np.imag(fft_coeffs[:int(fft_coeffs.size/2)]), color='orange', label=r'$X_k$ [parte immaginaria]')
+axs[2, 0].set_title('Coefficenti di Fourier immaginari [data1]')
 axs[2, 0].set_xlabel('Frequenza [Hz]')
-axs[2, 0].set_ylabel(r'$X_k immaginaria$')
+axs[2, 0].set_ylabel(r'$X_k$')
 axs[2, 0].legend()
 
 # Plot del segnale filtrato e ricostruito dataset 2
 axs[0, 1].plot(df2.iloc[:, 0], signal_reconstructed2, alpha=0.7, color='green', label='Segnale originale')
 axs[0, 1].plot(df2.iloc[:, 0], signal_filtered2, color='purple', label='Segnale filtrato')
-axs[0, 1].set_title('Segnale ricostruito (filtrato) e non (df2)')
+axs[0, 1].set_title('Sintesi del segnale [data2]')
 axs[0, 1].set_xlabel('Tempo')
 axs[0, 1].set_ylabel('Ampiezza')
 axs[0, 1].legend()
 axs[0, 1].set_xlim(0.54 , 0.68)
 
 # Plot della FFT (reale) dataset 2
-axs[1, 1].plot(freqs2[:int(freqs2.size/2)], np.real(np.abs(fft_coeffs2[:int(fft_coeffs2.size/2)])), color='black', label=r'$X_k$ reale')
-axs[1, 1].set_title('Coefficenti di Fourier reali (df2)')
+axs[1, 1].plot(freqs2[:int(freqs2.size/2)], np.real(np.abs(fft_coeffs2[:int(fft_coeffs2.size/2)])), color='black', label=r'$|X_k|$ [parte reale]')
+axs[1, 1].set_title('Coefficenti di Fourier reali [data2]')
 axs[1, 1].set_xlabel('Frequenza [Hz]')
-axs[1, 1].set_ylabel(r'$X_k reale$')
+axs[1, 1].set_ylabel(r'$|X_k|$')
 axs[1, 1].legend()
 
 # Plot della FFT (immaginaria) dataset 2
-axs[2, 1].plot(freqs2[:int(freqs2.size/2)], np.imag(fft_coeffs2[:int(fft_coeffs2.size/2)]), color='orange', label=r'$X_k$ immaginaria')
-axs[2, 1].set_title('Coefficenti di Fourier immaginari (df2)')
+axs[2, 1].plot(freqs2[:int(freqs2.size/2)], np.imag(fft_coeffs2[:int(fft_coeffs2.size/2)]), color='orange', label=r'$X_k$ [parte immaginaria]')
+axs[2, 1].set_title('Coefficenti di Fourier immaginari [data2]')
 axs[2, 1].set_xlabel('Frequenza [Hz]')
-axs[2, 1].set_ylabel(r'$X_k immaginaria$')
+axs[2, 1].set_ylabel(r'$X_k$')
 axs[2, 1].legend()
 
 # Plot del segnale filtrato e ricostruito dataset 3
 axs[0, 2].plot(df3.iloc[:, 0], signal_reconstructed3, alpha=0.7, color='green', label='Segnale originale')
-axs[0, 2].plot(df3.iloc[:, 0], signal_filtered3, color='purple', label='Segnale filtrato')
-axs[0, 2].set_title('Segnale ricostruito (filtrato) e non (df3)')
+axs[0, 2].plot(df3.iloc[:, 0], signal_filtered3, color='purple', label='Segnale filtrato') 
+axs[0, 2].set_title('Sintesi del segnale [data3]')
 axs[0, 2].set_xlabel('Tempo')
 axs[0, 2].set_ylabel('Ampiezza')
 axs[0, 2].legend()
 axs[0, 2].set_xlim(0.577 , 0.579)
 
 # Plot della FFT (reale) dataset 3
-axs[1, 2].plot(freqs3[:int(freqs3.size/2)], np.real(np.abs(fft_coeffs3[:int(fft_coeffs3.size/2)])), color='black', label=r'$X_k$ reale')
-axs[1, 2].set_title('Coefficenti di Fourier reali (df3)')
+axs[1, 2].plot(freqs3[:int(freqs3.size/2)], np.real(np.abs(fft_coeffs3[:int(fft_coeffs3.size/2)])), color='black', label=r'$X_k$ [parte reale]')
+axs[1, 2].set_title('Coefficenti di Fourier reali (data3)')
 axs[1, 2].set_xlabel('Frequenza [Hz]')
-axs[1, 2].set_ylabel(r'$X_k reale$')
+axs[1, 2].set_ylabel(r'$|X_k|$')
 axs[1, 2].legend()
 
 # Plot della FFT (immaginaria) dataset 3
-axs[2, 2].plot(freqs3[:int(freqs3.size/2)], np.imag(fft_coeffs3[:int(fft_coeffs3.size/2)]), color='orange', label=r'$X_k$ immaginaria')
-axs[2, 2].set_title('Coefficenti di Fourier immaginari (df3)')
+axs[2, 2].plot(freqs3[:int(freqs3.size/2)], np.imag(fft_coeffs3[:int(fft_coeffs3.size/2)]), color='orange', label=r'$X_k$ [parte immaginaria]')
+axs[2, 2].set_title('Coefficenti di Fourier immaginari (data3)')
 axs[2, 2].set_xlabel('Frequenza [Hz]')
-axs[2, 2].set_ylabel(r'$X_k immaginaria$')
+axs[2, 2].set_ylabel(r'$X_k$')
 axs[2, 2].legend()
 
 plt.show()
 
+# Plot zoommato del filtro del dataset3
+
+plt.plot(df3.iloc[:, 0], signal_reconstructed3, alpha=0.7, color='green', label='Segnale originale')
+plt.plot(df3.iloc[:, 0], signal_filtered3, color='purple', label='Segnale filtrato')
+plt.xlabel('Tempo')
+plt.ylabel('Ampiezza')
+plt.xlim(0.57758 , 0.57768)
+plt.ylim(0.3 , 0.45)
+plt.show()
+
 # Plot della potenza spettrale df1
-fig, axs = plt.subplots(2, 3, figsize=(12, 8), constrained_layout=True) # df1 originale
+fig, axs = plt.subplots(2, 3, figsize=(12, 8), constrained_layout=True) 
 
-axs[0, 0].plot(freqs[:int(freqs.size/2)], np.absolute(fft_coeffs[:int(fft_coeffs.size/2)])**2, color='red', label='Potenza spettrale originale df1')
-plt.title('Potenza Spettrale')
-plt.xlabel('Frequenza [Hz]')
-plt.ylabel(r'$|X_k|^2$')
-plt.legend()
+axs[0,0].plot(freqs[:int(freqs.size/2)], np.absolute(fft_coeffs[:int(fft_coeffs.size/2)])**2, color='red')
+axs[0,0].set_title('Potenza Spettrale [data1]')
+axs[0,0].set_xlabel('Frequenza [Hz]')
+axs[0,0].set_ylabel(r'$|X_k|^2$')
 
-axs[0, 1].plot(freqs2[:int(freqs2.size/2)], np.absolute(fft_coeffs2[:int(fft_coeffs2.size/2)])**2, color='blue', label='Potenza spettrale originale df2')
-plt.title('Potenza Spettrale')
-plt.xlabel('Frequenza [Hz]')
-plt.ylabel(r'$|X_k|^2$')
-plt.legend()
+#zoom1
+ins_ax = axs[0,0].inset_axes([0.75, 0.75, 0.2, 0.2])  # [x, y, width, height]
+ins_ax.plot(freqs[:int(freqs.size/2)], np.absolute(fft_coeffs[:int(fft_coeffs.size/2)])**2, color='red')
+ins_ax.set_ylim(0, 6*10**8)
+ins_ax.set_xlim(0 , 50)
 
-axs[0, 2].plot(freqs3[:int(freqs3.size/2)], np.absolute(fft_coeffs3[:int(fft_coeffs3.size/2)])**2, color='orange', label='Potenza spettrale originale df3')
-axs[0, 2].set_title('Potenza Spettrale')
+axs[0, 1].plot(freqs2[:int(freqs2.size/2)], np.absolute(fft_coeffs2[:int(fft_coeffs2.size/2)])**2, color='blue')
+axs[0,1].set_title('Potenza Spettrale [data2]')
+axs[0,1].set_xlabel('Frequenza [Hz]')
+axs[0,1].set_ylabel(r'$|X_k|^2$')
+
+#zoom2
+ins_ax = axs[0, 2].inset_axes([0.75, 0.75, 0.2, 0.2])  # [x, y, width, height]
+ins_ax.plot(freqs2[:int(freqs2.size/2)], np.absolute(fft_coeffs2[:int(fft_coeffs2.size/2)])**2, color='orange')
+ins_ax.set_ylim(0, 1.5*10**8)
+ins_ax.set_xlim(0, 10)
+
+axs[0, 2].plot(freqs3[:int(freqs3.size/2)], np.absolute(fft_coeffs3[:int(fft_coeffs3.size/2)])**2, color='orange')
+axs[0, 2].set_title('Potenza Spettrale [data3]')
 axs[0, 2].set_xlabel('Frequenza [Hz]')
 axs[0, 2].set_ylabel(r'$|X_k|^2$')
-axs[0, 2].legend()
-plt.legend()
+
+#zoom3
+ins_ax = axs[0,2].inset_axes([0.75, 0.75, 0.2, 0.2])  # [x, y, width, height]
+ins_ax.plot(freqs3[:int(freqs3.size/2)], np.absolute(fft_coeffs3[:int(fft_coeffs3.size/2)])**2, color='orange')
+ins_ax.set_ylim(0, 1.5*10**8)
+ins_ax.set_xlim(0 , 10)
 
 # Plot della potenza spettrale filtrata
 
-axs[1, 0].plot(freqs[:int(freqs.size/2)], np.abs(fft_filtered[:int(fft_filtered.size/2)])**2, color='red', label='Potenza spettrale df1 filtrata $P < 2e9$') # df1 filtrata
-axs[1, 0].set_title('Potenza Spettrale filtrata df1')
+axs[1, 0].plot(freqs[:int(freqs.size/2)], np.abs(fft_filtered[:int(fft_filtered.size/2)])**2, color='red', label=r'Filtro $f \in [200,240] Hz$') # df1 filtrata
+axs[1, 0].set_title('Potenza Spettrale filtrata [data1]')
 axs[1, 0].set_xlabel('Frequenza [Hz]')
 axs[1, 0].set_ylabel(r'$|X_k|^2$')
 axs[1, 0].legend()
 
-axs[1, 1].plot(freqs2[:int(freqs2.size/2)], np.abs(fft_filtered2[:int(fft_filtered2.size/2)])**2, color='blue', label='Potenza spettrale df2 filtrata $P < (1.5)e9$') # df2 filtrata
-axs[1, 1].set_title('Potenza Spettrale filtrata df2')
+axs[1, 1].plot(freqs2[:int(freqs2.size/2)], np.abs(fft_filtered2[:int(fft_filtered2.size/2)])**2, color='blue', label=r'Filtro: $f \in [495,505] Hz$') # df2 filtrata
+axs[1, 1].set_title('Potenza Spettrale filtrata [data2]')
 axs[1, 1].set_xlabel('Frequenza [Hz]')
 axs[1, 1].set_ylabel(r'$|X_k|^2$')
 axs[1, 1].legend()
 
-axs[1, 2].plot(freqs3[:int(freqs3.size/2)], np.abs(fft_filtered3[:int(fft_filtered3.size/2)])**2, color='orange', label='Potenza spettrale df3 filtrata $P < 2e8$') # df3 filtrata
-axs[1, 2].set_title('Potenza Spettrale filtrata df3')
+axs[1, 2].plot(freqs3[:int(freqs3.size/2)], np.abs(fft_filtered3[:int(fft_filtered3.size/2)])**2, color='orange', label=r'Filtro: $f \leqslant 500 Hz$') # df3 filtrata
+axs[1, 2].set_title('Potenza Spettrale filtrata [data3]')
 axs[1, 2].set_xlabel('Frequenza [Hz]')
 axs[1, 2].set_ylabel(r'$|X_k|^2$')
 axs[1, 2].legend()
