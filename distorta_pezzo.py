@@ -82,7 +82,7 @@ axs[0].set_title('Potenza spettrale originale [distorta pezzo]')
 axs[0].set_xlabel('Frequenza [Hz]')
 axs[0].set_ylabel(r'$|X_k|^2$')
 
-#axs[1].plot(anti_fft_o, color='green', label='Segnale originale') #ricostruzione segnale originale
+axs[1].plot(anti_fft_o, color='green', label='Segnale originale') #ricostruzione segnale originale
 axs[1].set_title('Distorta originale ricostruita')
 axs[1].set_xlabel('Tempo')
 axs[1].set_ylabel('Ampiezza')
