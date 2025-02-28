@@ -4,8 +4,6 @@ from scipy import fft, constants
 import matplotlib.pyplot as plt
 import soundfile as sf
 
-from modulo_dft import dft , idft # Modulo funzioni (trasformata e antitrasformata [np.sin, np.cos]) 
-
 # Leggi il file audio (diapason.wav)
 data, samplerate = sf.read('/home/gabriele/Downloads/distorta.wav')
 print('-------------------------------')
