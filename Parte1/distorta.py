@@ -21,7 +21,7 @@ if len(new_data.shape) > 1:
     new_data = new_data[:, 0] 
 
 # Trasformata di Fourier
-fft_coeffs = dft(new_data)
+fft_coeffs = fft.fft(new_data)
 
 diff_temp = 1 / new_samplerate
 freqs =  fft.fftfreq(len(new_data), diff_temp)
@@ -44,11 +44,11 @@ mask3 = ((freqs >= 210) & (freqs <= 230)) | ((freqs >= 325) & (freqs <= 334)) | 
 fft_filtered3[~mask3] = 0 # tutti i picchi principali (+ 2 termini)                        
 
 # Antitrasformata di fourier per segnale filtrato
-anti_fft_o = fft.idft(fft_coeffs)
-anti_fft = fft.idft(fft_filtered)
-anti_fft1 = fft.idft(fft_filtered1)
-anti_fft2 = fft.idft(fft_filtered2)
-anti_fft3 = fft.idft(fft_filtered3)
+anti_fft_o = fft.ifft(fft_coeffs)
+anti_fft = fft.ifft(fft_filtered)
+anti_fft1 = fft.ifft(fft_filtered1)
+anti_fft2 = fft.ifft(fft_filtered2)
+anti_fft3 = fft.ifft(fft_filtered3)
 
 # Plot dati
 fig, axs = plt.subplots(1, 3, figsize=(10, 6), layout='constrained')
